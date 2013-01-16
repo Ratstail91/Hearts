@@ -120,6 +120,7 @@ void Player::SetHandPositions() {
 }
 
 void Player::SetTrickPositions() {
+	//Sorts out the cards won from tricks for display at the end of the round
 	int x = posX, y = posY;
 
 	tricks.Sort();
@@ -139,6 +140,7 @@ void Player::DrawHand(SDL_Surface* dest) {
 }
 
 void Player::DrawTricks(SDL_Surface* dest) {
+	//draws the cards won from tricks at the end of the round
 	tricks.Sort();
 
 	for (int i = 0; i < tricks.Size(); i++) {
@@ -153,6 +155,7 @@ void Player::DrawTricks(SDL_Surface* dest) {
 //-------------------------
 
 void Player::AddSwapCards(int card) {
+	//highlight a card
 	for (int i = 0; i < 3; i++) {
 		if (swapCards[i] == -1) {
 			swapCards[i] = card;
@@ -162,6 +165,7 @@ void Player::AddSwapCards(int card) {
 }
 
 bool Player::CheckSwapCards(int card) {
+	//if a card has been highlighted
 	for (int i = 0; i < 3; i++)
 		if (card == swapCards[i])
 			return true;
@@ -169,6 +173,7 @@ bool Player::CheckSwapCards(int card) {
 }
 
 bool Player::CheckSwapCards() {
+	//check if three cards have been highlighted
 	for (int i = 0; i < 3; i++)
 		if (swapCards[i] == -1)
 			return false;

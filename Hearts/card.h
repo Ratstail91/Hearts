@@ -62,8 +62,8 @@ protected:
 	const int suit;
 	const int rank;
 
-	int face;
-	SDL_Surface* faceSurface;
+	int face; //TODO: "facestate"
+	SDL_Surface* faceSurface; //TODO: Image
 	SDL_Surface* backSurface;
 
 	Card* next;

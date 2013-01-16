@@ -140,7 +140,7 @@ Card* CardList::PassSlab(int first, int count) {
 
 void CardList::Shuffle() {
 	//New version
-	srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL)); //TODO: Remove this, initiate randomization in the Scene (and shuffle 3 times ;) )
 	iterator shuffleHead = NULL;
 	iterator prev = NULL;
 

@@ -34,7 +34,7 @@ public:
 	CardList* Hand();
 	CardList* Tricks();
 
-	/* Score members */
+	/* Score members */ //TODO: not good.
 	int Score(int score = 0);
 	int Wins(int wins = 0);
 
@@ -52,7 +52,7 @@ public:
 
 	bool CheckSwapCards();
 protected:
-	/* Swapping members */
+	/* Swapping members */ //TODO: raname to the "highlight" system
 	void AddSwapCards(int);
 	bool CheckSwapCards(int);
 	void RemoveSwapCards(int);

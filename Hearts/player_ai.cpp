@@ -73,6 +73,10 @@ Card* PlayerAI::PassPlayFirstTrick(int leadingSuit) {
 		if (Hand()->Read(i)->Suit() == leadingSuit)
 			return Hand()->Pass(i);
 
+	/* bug: it's possible that if every penalty card is initially dealt the the AI, it'll break
+	 * Solution: Always shuffle first.
+	*/
+
 	//can't follow suit, no penalty cards
 	Hand()->SortRank();
 	Card* c = NULL;

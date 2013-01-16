@@ -167,114 +167,10 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="Hearts"
 			>
-			<File
-				RelativePath=".\animation.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\audio_manager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\base_engine.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\card.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\card_list.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\deck.cpp"
-				>
-			</File>
 			<File
 				RelativePath=".\hearts_engine.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\image.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\image_manager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\music.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\network_manager.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\object.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\player.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\player_ai.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\player_user.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\sound.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\table.cpp"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
-			<File
-				RelativePath=".\animation.h"
-				>
-			</File>
-			<File
-				RelativePath=".\audio_manager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\base_engine.h"
-				>
-			</File>
-			<File
-				RelativePath=".\card.h"
-				>
-			</File>
-			<File
-				RelativePath=".\card_list.h"
-				>
-			</File>
-			<File
-				RelativePath=".\deck.h"
 				>
 			</File>
 			<File
@@ -282,11 +178,133 @@
 				>
 			</File>
 			<File
+				RelativePath=".\table.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\table.h"
+				>
+			</File>
+			<Filter
+				Name="Card Systems"
+				>
+				<File
+					RelativePath=".\card.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\card.h"
+					>
+				</File>
+				<File
+					RelativePath=".\card_list.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\card_list.h"
+					>
+				</File>
+				<File
+					RelativePath=".\deck.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\deck.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Player Systems"
+				>
+				<File
+					RelativePath=".\player.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\player.h"
+					>
+				</File>
+				<File
+					RelativePath=".\player_ai.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\player_ai.h"
+					>
+				</File>
+				<File
+					RelativePath=".\player_user.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\player_user.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="-Notes"
+			>
+			<File
+				RelativePath="..\Notes\Outline.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\Notes\TODO.txt"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="KAGE"
+			>
+			<File
+				RelativePath=".\audio_manager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\audio_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\base_engine.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\base_engine.h"
+				>
+			</File>
+			<File
+				RelativePath=".\image.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\image.h"
 				>
 			</File>
 			<File
+				RelativePath=".\image_manager.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\image_manager.h"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\music.cpp"
 				>
 			</File>
 			<File
@@ -298,47 +316,13 @@
 				>
 			</File>
 			<File
-				RelativePath=".\network_manager.h"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\object.h"
-				>
-			</File>
-			<File
-				RelativePath=".\player.h"
-				>
-			</File>
-			<File
-				RelativePath=".\player_ai.h"
-				>
-			</File>
-			<File
-				RelativePath=".\player_user.h"
+				RelativePath=".\sound.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\sound.h"
 				>
 			</File>
-			<File
-				RelativePath=".\table.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
 		</Filter>
 	</Files>
 	<Globals>

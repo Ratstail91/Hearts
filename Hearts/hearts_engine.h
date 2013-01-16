@@ -45,14 +45,14 @@ private:
 	KAGE::ImageManager mImage;
 	KAGE::AudioManager mAudio;
 
-	/* Game phase members */
+	/* Game phase members */ //TODO: "phases"
 	void SetupPhase();
 	void SwapPhase();
 	void TrickPhase();
 	void ScorePhase();
 	void CleanupPhase();
 
-	/* Play phase members */
+	/* Play phase members */ //TODO: "steps"
 	void PlayBeforePhase();
 	void PlayPlayerPhase();
 	void PlayAfterPhase();
