@@ -10,13 +10,13 @@ Finally, my biggest mistake I believe, was that I made the KAGE engine closed so
 
 I don’t consider this project complete, since it’s still missing a score display and a card passing button, but the scores are shown in the console window (stdout) and the F1 button compensates for a lack of graphical buttons. I’d like to remake this, using the existing game logic to rely on my current Codebase version. If I do, I’ll release the modified version under the zlib license.
 
-####Instructions
+#### Instructions
 
 To select a card, click on it
 To pass three cards at the start of the round, select them and press F1
 To speed up the wait after a round, press F1
 
-####License
+#### License
 
 Built using Simple DirectMedia Layer (SDL) API. See http://www.libsdl.org for more information.
 
@@ -39,3 +39,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Hearts.  If not, see http://www.gnu.org/licenses/.
 
+#### References
+
+Blog: http://kr-studios.tumblr.com/  
+Oldest known version: https://dl.dropbox.com/u/46669050/Hearts%20by%20Kayne%20Ruse.rar  
