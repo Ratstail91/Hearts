@@ -12,6 +12,7 @@ I don’t consider this project complete, since it’s still missing a score display
 
 #### Instructions
 
+Drop the "rsc" folder into the same directory as the executable
 To select a card, click on it
 To pass three cards at the start of the round, select them and press F1
 To speed up the wait after a round, press F1
