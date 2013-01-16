@@ -1,0 +1,94 @@
+Card Structure:
+
+Card is the basic unit, representing a single card in play.
+Card has a suit & rank, a "next" pointer, and graphical components.
+The original Card class was descended from Image, which needs to be remedied.
+
+CardList is a linked list, which uses the Card class as nodes.
+CardList can handle slabs of cards, which is useful for passing many cards at once.
+Cardlist can sort and shuffle the cards in it's list, and draw them all.
+Cardlist has no known bugs, and is fairly self contained.
+
+Deck is a specialized CardList.
+Deck loads the graphics for the cards, creates the cards, and is used to deal the cards at the start of the game.
+Deck originally loaded the raw surfaces, but should load the bitmaps using the current Image class.
+Shouldn't need to much work.
+
+The only thing here that needs modification is the graphics system, otehrwise the card system is fairly solid.
+
+-------------------------
+
+Table holds and draws the cards at the center of the table.
+Table also sets their graphical positons to the center of the table, based on who went first.
+Table determines who the winner of a trick is, also based on who went first.
+
+A fairly specialized class.
+
+-------------------------
+
+Player Structure:
+
+The player structure is fairly complicated, if not the most complicated part of the game.
+The player structure handles a significant portion of the game rules.
+
+The Player class holds the two CardList objects for each player (the hand and tricks won).
+The Player class holds the "score" and "wins" values, which I'll need to lookup.
+The Player class acts as a parent to both PlayerUser and PlayerAI.
+The Player class uses the index of a card to determine if it is being passed at the start of a round
+The Player's swapping system is split between the three player classes
+
+PlayerUser is the user's class.
+It's main entry point is PassPlayCard(), which takes the mouse positon and other environmental factors as arguments.
+Depending on the game state, the PlayerUser class uses one of three different logical processes:
+*	First trick of the round
+*	Follow the suit of the trick (or lead the suit of playing first)
+*	If the player can't follow suit, they can break the suit. Break hearts if the player plays a heart.
+
+PlayerAI is the AI player's class.
+PlayerAI's main entry pointis also PassPlayCard(), but it doesn't take the mouse position (why would it?)
+PlayerAI follows the same logical three-part system based on the game state.
+PlayerAI was designed to follow the most logical route when choosing cards.
+When PlayerAI breaks suit, it tries to give the player as many points as possible:
+*	tries to play the Queen of Spades first
+*	tries to play it's highest ranked heart
+*	plays it's highest ranked card
+
+Apart from graphical system updates, this logic shouldn't need modification.
+
+-------------------------
+
+Engine Structure:
+
+HeartsEngine is the only Scene in this game, and is built on BaseScene.
+BaseEngine is a single-scene system, so BaseEngine and HeartsEngine could easily be rolled together.
+Upgrading this to the current Scene framework isn't the best idea, and my be unnecessary.
+On the whole, HeartsEngine manages the gamephase and the interaction with other classes.
+
+The heart image should be a single instance of Image, removing ImageManager.
+The sounds can be single instances as well.
+I could add a simple "sound" module into Codebase later.
+
+The engine's logic can be changes slightly to Init-Loop-Quit when it's rolled together.
+
+...(needs a little more research)
+
+-------------------------
+
+Graphical Structure:
+
+The graphics are fairly simple.
+Deck loads the card surfaces, and the cards draw themselves.
+The only use of ImageManager is in HeartsEngine, where it is used to display the Heart onscreen.
+ImageManager uses NamedManager.
+This can be easily replaced with a single instance of the Image class.
+
+The graphical system is probably the easist system to upgrade, and should be done first.
+
+-------------------------
+
+Audio Structure:
+
+The Audio System is a wrapper around SDL_mixer.
+
+AudioManager is based on NamedManager, using Sound as the template data type.
+AudioManager also has a single copy of Music.
