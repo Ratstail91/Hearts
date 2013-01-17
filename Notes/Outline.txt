@@ -70,7 +70,24 @@ I could add a simple "sound" module into Codebase later.
 
 The engine's logic can be changes slightly to Init-Loop-Quit when it's rolled together.
 
-...(needs a little more research)
+Each game is a series of rounds, which are broken up into a series of tricks.
+A round is handled using the "Game Phase Members"
+*	SetupPhase()
+*	SwapPhase()
+*	TrickPhase()
+*	ScorePhase()
+*	CleanupPhase()
+Each trick is handled using "Play Phase Memebers"
+*	PlayBeforePhase()
+*	PlayPlayerPhase()
+*	PlayAfterPhase()
+*	PlayDisplayPhase()
+The play phase members will need to be renamed for clarity, otherwise the smurf naming isn't too bad.
+After each round, the rotation progresses to the next in the list.
+The game progresses anticlockwise.
+PlayBeforePhase() handles AI players to the right, while PlayAfterPhase() handles AI players to the left.
+PlayDisplayPhase() is a simple 2 second delay, but doesn't block.
+The remaining functions are just mainly housekeeping.
 
 -------------------------
 
