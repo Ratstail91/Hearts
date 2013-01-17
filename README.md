@@ -1,6 +1,6 @@
 # Project Hearts version 1.0, 22nd June 2011
 
-#### Introduction
+## Introduction
 
 This project is over 1 1/2 years old, so it doesn't reflect my current programming skills. Regardless, it's a pretty good demonstration of my development. From the KAGE engine, you can see what my thought processes at the time were, and you can probably guess that this evolved into my [Codebase](https://github.com/Ratstail91/Codebase). This has a sound system, and some aspects are different, but it's not a terrible start. I’ve also included all of the unused modules including NetworkManager, which aren’t used here, but are simply part of KAGE.
 
@@ -10,37 +10,30 @@ Finally, my biggest mistake I believe, was that I made the KAGE engine closed so
 
 I don’t consider this project complete, since it’s still missing a score display and a card passing button, but the scores are shown in the console window (stdout) and the F1 button compensates for a lack of graphical buttons. I’d like to remake this, using the existing game logic to rely on my current Codebase version. If I do, I’ll release the modified version under the zlib license.
 
-#### Instructions
+## Instructions
 
 Drop the "rsc" folder into the same directory as the executable  
 To select a card, click on it  
 To pass three cards at the start of the round, select them and press F1  
 To speed up the wait after a round, press F1  
 
-#### License
+## Copyright
 
-Built using Simple DirectMedia Layer (SDL) API. See http://www.libsdl.org for more information.
+Copyright (c) Kayne Ruse 2011, 2012, 2013
 
-Built using Kayne's All-purpose Game Engine (KAGE). See KAGE documentation for more information (no longer available).
+This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 
-Programming by Kayne Ruse
-Freeware Graphics
-Freeware Audio
+Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
 
-Hearts is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+   1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 
-Hearts is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+   2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 
-You should have received a copy of the GNU General Public License
-along with Hearts.  If not, see http://www.gnu.org/licenses/.
+   3. This notice may not be removed or altered from any source distribution.
 
-#### References
+## Contact information
 
-Blog: http://kr-studios.tumblr.com/  
+ratstail91@yahoo.com.au  
+http://kr-studios.tumblr.com/  
+http://www.facebook.com/krgamestudios  
 Oldest known version: https://dl.dropbox.com/u/46669050/Hearts%20by%20Kayne%20Ruse.rar  
