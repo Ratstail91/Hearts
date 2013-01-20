@@ -1,7 +1,7 @@
 /* File Name: card_list.cpp
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 05/06/2011
- * Copyright: (c) Kayne Ruse 2011, 2012
+ * Date (dd/mm/yyyy): 21/01/2013
+ * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,12 +23,11 @@
  * distribution.
  *
  * Description:
- *     Designed for Project Hearts, 4th try.
+ *     A linked list of playing cards.
 */
-#include <iostream>
-#include <time.h>
 #include "card_list.h"
-using namespace std;
+
+#include <cstdlib>
 
 //-------------------------
 //Public access members
@@ -144,8 +143,9 @@ Card* CardList::PassSlab(int first, int count) {
 //-------------------------
 
 void CardList::Shuffle() {
+	//TODO: rewrite this to avoid continuous calls to Size()
+
 	//New version
-	srand((unsigned int)time(NULL)); //TODO: Remove this, initiate randomization in the Scene (and shuffle 3 times ;) )
 	iterator shuffleHead = NULL;
 	iterator prev = NULL;
 
@@ -207,7 +207,7 @@ void CardList::SortRank() {
 
 	while(it != NULL && Size()) {
 		//first card
-		if (it->Rank() > Read()->Rank()) {
+		if (it->GetRank() > Read()->GetRank()) {
 			//insert the new card at the start of the list
 			it = Pass();
 			it->SetNext(sortHead);
@@ -215,7 +215,7 @@ void CardList::SortRank() {
 			continue;
 		}
 
-		while (it->GetNext() != NULL && Read()->Rank() > it->GetNext()->Rank()) {
+		while (it->GetNext() != NULL && Read()->GetRank() > it->GetNext()->GetRank()) {
 			//place the iterator just before the position to insert the card
 			it = it->GetNext();
 		}
@@ -243,7 +243,7 @@ Card* CardList::Head() {
 	return headCard;
 }
 
-void CardList::DrawAll(SDL_Surface* dest) {
+void CardList::DrawTo(SDL_Surface* dest) {
 	for (iterator it = headCard;it != NULL;it = it->GetNext())
-		it->Draw(dest);
+		it->DrawTo(dest);
 }

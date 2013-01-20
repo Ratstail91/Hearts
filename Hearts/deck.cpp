@@ -1,7 +1,7 @@
 /* File Name: deck.cpp
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 05/06/2011
- * Copyright: (c) Kayne Ruse 2011, 2012
+ * Date (dd/mm/yyyy): 21/01/2013
+ * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,55 +23,43 @@
  * distribution.
  *
  * Description:
- *     Designed for Project Hearts, 4th try.
+ *     Create and destroy the cards in the game, and report if any are missing.
 */
-#include <iostream>
 #include "deck.h"
-using namespace std;
+
+#include <stdexcept>
 
 Deck::Deck() {
-	faceSurface = NULL;
-	backSurface = NULL;
+	count = 0;
 }
 
 Deck::~Deck() {
-	DeleteAll();
-	if (faceSurface != NULL)
-		SDL_FreeSurface(faceSurface);
-	if (backSurface != NULL)
-		SDL_FreeSurface(backSurface);
+	Quit();
 }
 
 void Deck::Init(const char* faceName, const char* backName) {
-	//Create and setup the surfaces, with error checking
-	faceSurface = SDL_LoadBMP(faceName);
+	face.LoadSurface(faceName);
+	back.LoadSurface(backName);
 
-	if (faceSurface == NULL) {
-		cerr << "Error in Deck::Init(faceName,backName)" << endl;
-		cerr << "SDL_LoadBMP() returned NULL" << endl;
-		cerr << "faceName: " << faceName << endl;
+	//exit if there are already cards in the game
+	if (count != 0)
 		return;
-	}
-
-	backSurface = SDL_LoadBMP(backName);
-
-	if (backSurface == NULL) {
-		cerr << "Error in Deck::Init(faceName,backName)" << endl;
-		cerr << "SDL_LoadBMP() returned NULL" << endl;
-		cerr << "backName: " << backName << endl;
-		return;
-	}
-
-	SDL_SetColorKey(faceSurface,SDL_SRCCOLORKEY,SDL_MapRGB(faceSurface->format,255,0,255));
-	SDL_SetColorKey(backSurface,SDL_SRCCOLORKEY,SDL_MapRGB(backSurface->format,255,0,255));
 
 	//Create the cards
-	for (int s = 1; s <= 4; s++)
-		for (int r = 1; r <= 13; r++)
-			Receive(new Card(s,r,faceSurface,backSurface));
+	for (int s = 1; s <= 4; s++) {
+		for (int r = 1; r <= 13; r++) {
+			Receive(new Card(s,r,face.GetSurface(),back.GetSurface()));
+			count++;
+		}
+	}
 }
 
-void Deck::DeleteAll() {
-	while(Head() != NULL)
+void Deck::Quit() {
+	while(Head() != NULL) {
 		delete Pass();
+		count--;
+	}
+
+	if (count != 0)
+		throw(std::runtime_error("Memory leak: Some cards are unnacounted for"));
 }

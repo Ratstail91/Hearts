@@ -1,7 +1,7 @@
 /* File Name: card.cpp
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 05/06/2011
- * Copyright: (c) Kayne Ruse 2011, 2012
+ * Date (dd/mm/yyyy): 21/01/2013
+ * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,48 +23,48 @@
  * distribution.
  *
  * Description:
- *     Designed for Project Hearts, 4th try.
+ *     A basic playing card. This also has the graphics built in.
 */
 #include "card.h"
 
-Card::Card(int _suit, int _rank, SDL_Surface* _faceSurface, SDL_Surface* _backSurface):
-	Image(_faceSurface),
-	suit(_suit),
-	rank(_rank),
-	faceSurface(_faceSurface),
-	backSurface(_backSurface)
+#include <stdexcept>
+
+//-------------------------
+//Public access members
+//-------------------------
+
+Card::Card(int s, int r, SDL_Surface* faceSurface, SDL_Surface* backSurface):
+	suit(s),
+	rank(r)
 {
-	SetFace(UP);
-	SetWidth(73);
-	SetHeight(98);
+	//images
+	face.SetSurface(faceSurface);
+	back.SetSurface(backSurface);
+
+	//set the face's clip
+	face.SetClipX((rank - 1) * 73);
+	face.SetClipY((suit - 1) * 98);
+	face.SetClipW(73);
+	face.SetClipH(98);
+
+	SetFaceState(UP);
+
+	x = 0;
+	y = 0;
+
 	next = NULL;
 }
 
-int Card::Suit() {
+//-------------------------
+//Card game members
+//-------------------------
+
+int Card::GetSuit() {
 	return suit;
 }
 
-int Card::Rank() {
+int Card::GetRank() {
 	return rank;
-}
-
-int Card::SetFace(int _face) {
-	face = _face;
-	if (face == UP) {
-		SetSurface(faceSurface);
-		SetClipX((rank - 1) * 73);
-		SetClipY((suit - 1) * 98);
-	}
-	else {
-		SetSurface(backSurface);
-		SetClipX(0);
-		SetClipY(0);
-	}
-	return face;
-}
-
-int Card::GetFace() {
-	return face;
 }
 
 Card* Card::SetNext(Card* _next) {
@@ -76,11 +76,10 @@ Card* Card::GetNext() {
 }
 
 bool Card::operator>(Card& card) {
-	if (Suit() > card.Suit())
+	if (suit > card.suit)
 		return true;
 
-	if (Suit() == card.Suit() &&
-		Rank() > card.Rank())
+	if (suit == card.suit && rank > card.rank)
 		return true;
 
 	return false;
@@ -88,4 +87,46 @@ bool Card::operator>(Card& card) {
 
 bool Card::operator<(Card& card) {
 	return card > *this;
+}
+
+//-------------------------
+//Graphics members
+//-------------------------
+
+int Card::SetFaceState(int face) {
+	if (face != UP && face != DOWN)
+		throw(std::invalid_argument("Unknown face value"));
+	return faceState = face;
+}
+
+int Card::GetFaceState() {
+	return faceState;
+}
+
+void Card::SetPos(Sint16 newX, Sint16 newY) {
+	x = newX;
+	y = newY;
+}
+
+Sint16 Card::SetX(Sint16 newX) {
+	return x = newX;
+}
+
+Sint16 Card::SetY(Sint16 newY) {
+	return y = newY;
+}
+
+Sint16 Card::GetX() {
+	return x;
+}
+
+Sint16 Card::GetY() {
+	return y;
+}
+
+void Card::DrawTo(SDL_Surface* const dest) {
+	if (faceState == UP)
+		face.DrawTo(dest, x, y);
+	else if (faceState == DOWN)
+		back.DrawTo(dest, x, y);
 }

@@ -1,7 +1,7 @@
 /* File Name: deck.h
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 05/06/2011
- * Copyright: (c) Kayne Ruse 2011, 2012
+ * Date (dd/mm/yyyy): 21/01/2013
+ * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,11 +23,15 @@
  * distribution.
  *
  * Description:
- *     Designed for Project Hearts, 4th try.
+ *     Create and destroy the cards in the game, and report if any are missing.
 */
 #ifndef KR_DECK_H_
 #define KR_DECK_H_
+
 #include "SDL.h"
+
+#include "image.h"
+
 #include "card_list.h"
 
 class Deck : public CardList {
@@ -37,11 +41,13 @@ public:
 	~Deck();
 
 	void Init(const char* faceName, const char* backName);
-	void DeleteAll();
+	void Quit();
 private:
 	/* Private access members */
-	SDL_Surface* faceSurface;
-	SDL_Surface* backSurface;
+	Image face;
+	Image back;
+
+	int count;
 };
 
 #endif

@@ -1,7 +1,7 @@
 /* File Name: card_list.h
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 05/06/2011
- * Copyright: (c) Kayne Ruse 2011, 2012
+ * Date (dd/mm/yyyy): 21/01/2013
+ * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,7 +23,7 @@
  * distribution.
  *
  * Description:
- *     Designed for Project Hearts, 4th try.
+ *     A linked list of playing cards.
 */
 #ifndef KR_CARDLIST_H_
 #define KR_CARDLIST_H_
@@ -47,7 +47,7 @@ public:
 	int Size();
 	Card* Head();
 
-	void DrawAll(SDL_Surface*);
+	void DrawTo(SDL_Surface*);
 
 	typedef Card* iterator;
 private:

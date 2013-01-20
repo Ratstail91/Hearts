@@ -1,7 +1,7 @@
 /* File Name: card.h
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 05/06/2011
- * Copyright: (c) Kayne Ruse 2011, 2012
+ * Date (dd/mm/yyyy): 21/01/2013
+ * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,25 +23,25 @@
  * distribution.
  *
  * Description:
- *     Designed for Project Hearts, 4th try.
+ *     A basic playing card. This also has the graphics built in.
 */
 #ifndef KR_CARD_H_
 #define KR_CARD_H_
+
 #include "SDL.h"
+
 #include "image.h"
 
 #define ISCARD(CARD,RANK,SUIT) (CARD->Suit() == Card::SUIT && CARD->Rank() == Card::RANK)
 
-class Card : public KAGE::Image {
+class Card {
 public:
 	/* Public access members */
 	Card(int suit, int rank, SDL_Surface* faceSurface, SDL_Surface* backSurface);
 
-	int Suit();
-	int Rank();
-
-	int SetFace(int face);
-	int GetFace();
+	/* Card game memebers */
+	int GetSuit();
+	int GetRank();
 
 	Card* SetNext(Card* next);
 	Card* GetNext();
@@ -49,6 +49,19 @@ public:
 	bool operator>(Card&);
 	bool operator<(Card&);
 
+	/* Graphics members */
+	int SetFaceState(int face);
+	int GetFaceState();
+
+	void SetPos(Sint16 x, Sint16 y);
+	Sint16 SetX(Sint16);
+	Sint16 SetY(Sint16);
+	Sint16 GetX();
+	Sint16 GetY();
+
+	void DrawTo(SDL_Surface* const);
+
+	/* Macros */
 	enum {
 		UP = 1, DOWN
 	};
@@ -63,15 +76,17 @@ public:
 		TEN=9, JACK=10, QUEEN=11, KING=12, ACE=13
 	};
 protected:
-	/* Protected access members */
+	/* Card game members */
 	const int suit;
 	const int rank;
 
-	int face; //TODO: "facestate"
-	SDL_Surface* faceSurface; //TODO: Image
-	SDL_Surface* backSurface;
-
 	Card* next;
+
+	/* Graphics members */
+	int faceState;
+	Image face;
+	Image back;
+	Sint16 x, y;
 };
 
 #endif
