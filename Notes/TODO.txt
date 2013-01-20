@@ -1,15 +1,16 @@
 *	Try to keep the project as stable as possible.
 *	Use a separate development branch where necessary
+*	Don't forget to search for "TODO" tags in the code
 
 *	Remove NamedManager as soon as possible
 
 *	Remove unnecessary KAGE modules
-*	Rearrange the project hierarchy
+>	Rearrange the project hierarchy
 *	Breakdown and analyse the structure
 *	Upgrade to the current Codebase where possible
 
-*	Remedy Card's graphical system
-*	Use the current Image class in Card & Deck
+>	Remedy Card's graphical system
+>	Use the current Image class in Card & Deck
 *	Add in graphical buttons and onscreen text for user friendlyness
 
 *	Research SDL_mixer, to fully understand the audio system
@@ -20,3 +21,6 @@
 		This system seems to be split between the three player classes
 		I could use a unified highlighting system for both swapping and playing a card
 
+~~~~~
+
+*	~~Move the random setup~~ Add random seed to the scene
