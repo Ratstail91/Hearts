@@ -1,7 +1,7 @@
 /* File Name: image.cpp
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 20/06/2011
- * Copyright: (c) Kayne Ruse 2011, 2012
+ * Date (dd/mm/yyyy): 14/12/2012
+ * Copyright: (c) Kayne Ruse 2012
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,152 +23,93 @@
  * distribution.
  *
  * Description:
- *     The Image class, a wrapper for SDL_Surface and other drawing functionality.
- * Part of the KAGE Game Engine.
+ *     ...
 */
-#include <iostream>
 #include "image.h"
-using namespace std;
-using namespace KAGE;
+
+#include <exception>
 
 //-------------------------
 //Public access members
 //-------------------------
 
-Image::Image(const char* fileName, int x, int y, int w, int h):
-	localSurface(true)
-{
-	//Create a local surface from a file
-	surface = SDL_LoadBMP(fileName);
-
-	if (surface == NULL) {
-		cout << "Error in Image::Image()" << endl;
-		cout << "SDL_LoadBMP() returned NULL" << endl;
-		cout << "fileName: " << fileName << endl;
-		return;
-	}
-
-	SetColorKey(255,0,255);
-	Init(x,y,0,0,w,h);
-}
-
-Image::Image(SDL_Surface* surf, int x, int y, int w, int h):
-	localSurface(false)
-{
-	//Use a surface passed by the calling function
-	surface = surf;
-	Init(x,y,0,0,w,h);
-}
-
-void Image::Init(int x, int y, int sx, int sy, int sw, int sh) {
-	//Set up the variables
-	dclip.x = x;
-	dclip.y = y;
-	sclip.x = sx;
-	sclip.y = sy;
-	sclip.w = (sw == 0) ? surface->w : sw;
-	sclip.h = (sh == 0) ? surface->h : sh;
+Image::Image() {
+	m_clip.x = m_clip.y = m_clip.w = m_clip.h = 0;
+	m_pSurface = NULL;
+	m_bLocal = false;
 }
 
 Image::~Image() {
-	if (localSurface)
-		SDL_FreeSurface(surface);
+	UnloadSurface();
 }
 
 //-------------------------
-//Graphical members
+//Surface handlers
 //-------------------------
 
-void Image::Draw(SDL_Surface* dest, int camX, int camY) {
-	SDL_Rect tmp = dclip;
-	tmp.x += camX;
-	tmp.y += camY;
-	SDL_BlitSurface(surface,&sclip,dest,&tmp);
+void Image::LoadSurface(const char* fname) {
+	SDL_Surface* pSurface;
+	
+	if ( (pSurface = SDL_LoadBMP(fname)) == NULL)
+		throw(std::exception("Failed to load surface"));
+
+	UnloadSurface();
+
+	SetSurface(pSurface);
+
+	m_bLocal = true;
+
+	SetColorKey(255, 0, 255);
 }
 
-int Image::SetColorKey(int red, int green, int blue) {
-	if (localSurface)
-		return SDL_SetColorKey(surface,SDL_SRCCOLORKEY,SDL_MapRGB(surface->format,red,green,blue));
-	else
-		return -2;
+void Image::UnloadSurface() {
+	if (m_bLocal) {
+		SDL_FreeSurface(m_pSurface);
+		m_bLocal = false;
+	}
+
+	m_pSurface = NULL;
 }
 
-int Image::ClearColorKey() {
-	if (localSurface)
-		return SDL_SetColorKey(surface,0,0);
-	else
-		return -2;
-}
+SDL_Surface* Image::SetSurface(SDL_Surface* pSurface) {
+	if (m_bLocal)
+		throw(std::exception("Failed to set surface, Image has a local surface"));
 
-//-------------------------
-//Accessors and mutators
-//-------------------------
+	if (!pSurface)
+		throw(std::exception("Failed to set surface, given surface is NULL"));
 
-void Image::SetPos(int x, int y) {
-	dclip.x = x;
-	dclip.y = y;
-}
+	m_pSurface = pSurface;
 
-int Image::SetX(int x) {
-	return dclip.x = x;
-}
+	m_clip.x = 0;
+	m_clip.y = 0;
+	m_clip.w = m_pSurface->w;
+	m_clip.h = m_pSurface->h;
 
-int Image::SetY(int y) {
-	return dclip.y = y;
-}
+	m_bLocal = false;
 
-int Image::SetClipX(int x) {
-	return sclip.x = x;
-}
-
-int Image::SetClipY(int y) {
-	return sclip.y = y;
-}
-
-int Image::SetWidth(int w) {
-	return sclip.w = w;
-}
-
-int Image::SetHeight(int h) {
-	return sclip.h = h;
-}
-
-int Image::GetX() {
-	return dclip.x;
-}
-
-int Image::GetY() {
-	return dclip.y;
-}
-
-int Image::GetClipX() {
-	return sclip.x;
-}
-
-int Image::GetClipY() {
-	return sclip.y;
-}
-
-int Image::GetWidth() {
-	return sclip.w;
-}
-
-int Image::GetHeight() {
-	return sclip.h;
-}
-
-//-------------------------
-//Protected access members
-//-------------------------
-
-SDL_Surface* Image::SetSurface(SDL_Surface* surf) {
-	return surface = surf;
+	return m_pSurface;
 }
 
 SDL_Surface* Image::GetSurface() {
-	return surface;
+	return m_pSurface;
 }
 
-bool Image::LocalSurface() {
-	return localSurface;
+void Image::SetColorKey(Uint8 r, Uint8 g, Uint8 b) {
+	if (m_pSurface != NULL)
+		SDL_SetColorKey(m_pSurface, SDL_SRCCOLORKEY, SDL_MapRGB(m_pSurface->format, r, g, b));
+}
+
+void Image::ClearColorKey() {
+	if (m_pSurface != NULL)
+		SDL_SetColorKey(m_pSurface, 0, 0);
+}
+
+//-------------------------
+//Rendering
+//-------------------------
+
+void Image::DrawTo(SDL_Surface* const pDest, Sint16 x, Sint16 y) {
+	SDL_Rect sclip = m_clip, dclip = {x,y};
+
+	SDL_BlitSurface(m_pSurface, &sclip, pDest, &dclip);
 }
