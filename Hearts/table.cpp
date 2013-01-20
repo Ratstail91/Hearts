@@ -1,7 +1,7 @@
 /* File Name: table.cpp
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 09/06/2011
- * Copyright: (c) Kayne Ruse 2011, 2012
+ * Date (dd/mm/yyyy): 21/01/2013
+ * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,9 +23,11 @@
  * distribution.
  *
  * Description:
- *     Designed for Project Hearts, 4th try.
+ *     Hold the cards in play, and determine the winner of a trick.
 */
 #include "table.h"
+
+#include <stdexcept>
 
 //-------------------------
 //Public access members
@@ -47,32 +49,31 @@ Card* Table::Pass() {
 	return cList.PassSlab(0,4);
 }
 
-void Table::Receive(Card* card,int position) {
+void Table::Receive(Card* card, int position) {
 	//position is the player's pos
-	if (position < 0 || position > 4)
-		return;
+	if (position < 0 || position > 3)
+		throw(std::invalid_argument("Unknown player index"));
 
 	cards[position] = card;
 	cards[position]->SetPos(
 		cardPositions[position].x,
 		cardPositions[position].y
 	);
-	cards[position]->SetFace(Card::UP);
+	cards[position]->SetFaceState(Card::UP);
 }
 
 int Table::CalcWinner(int first) {
 	if (first < 0 || first > 3)
-		return -1;
+		throw(std::invalid_argument("Unknown player index"));
 
-	int suit = cards[first]->Suit();
+	int suit = cards[first]->GetSuit();
 	int winner = -1;
 	int highest = -1;
 
 	for (int i = 0; i < 4; i++) {
-		if (cards[i]->Suit() == suit &&
-			cards[i]->Rank() > highest)
+		if (cards[i]->GetSuit() == suit && cards[i]->GetRank() > highest)
 		{
-			highest = cards[i]->Rank();
+			highest = cards[i]->GetRank();
 			winner = i;
 		}
 	}
@@ -82,8 +83,8 @@ int Table::CalcWinner(int first) {
 
 int Table::GetLeadingSuit(int first) {
 	if (cards[first] == NULL)
-		return -1;
-	return cards[first]->Suit();
+		return -1; //this means "No cards yet..." -?
+	return cards[first]->GetSuit();
 }
 
 //-------------------------
@@ -107,5 +108,5 @@ void Table::Draw(SDL_Surface* dest, int first) {
 
 	for (int i = 0; i < 4; i++)
 		if (cards[(i + first) % 4] != NULL)
-			cards[(i + first) % 4]->Draw(dest);
+			cards[(i + first) % 4]->DrawTo(dest);
 }

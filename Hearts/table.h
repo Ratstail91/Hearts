@@ -1,7 +1,7 @@
 /* File Name: table.h
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 09/06/2011
- * Copyright: (c) Kayne Ruse 2011, 2012
+ * Date (dd/mm/yyyy): 21/01/2013
+ * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -23,7 +23,7 @@
  * distribution.
  *
  * Description:
- *     Designed for Project Hearts, 4th try.
+ *     Hold the cards in play, and determine the winner of a trick.
 */
 #ifndef KR_TABLE_H_
 #define KR_TABLE_H_
