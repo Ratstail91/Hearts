@@ -28,7 +28,7 @@
 #ifndef KR_HEARTSENGINE_H_
 #define KR_HEARTSENGINE_H_
 #include "base_engine.h"
-#include "image_manager.h"
+#include "image.h"
 #include "audio_manager.h"
 #include "deck.h"
 #include "player_ai.h"
@@ -47,7 +47,7 @@ private:
 	void Draw				();
 
 	/* KAGE Managers */
-	KAGE::ImageManager mImage;
+	Image heartSprite;
 	KAGE::AudioManager mAudio;
 
 	/* Game phase members */ //TODO: "phases"

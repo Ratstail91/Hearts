@@ -1,6 +1,6 @@
 /* File Name: card.cpp
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 21/01/2013
+ * Date (dd/mm/yyyy): 22/01/2013
  * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
@@ -41,9 +41,11 @@ Card::Card(int s, int r, SDL_Surface* faceSurface, SDL_Surface* backSurface):
 	face.SetSurface(faceSurface);
 	back.SetSurface(backSurface);
 
-	//set the face's clip
+	//set the face's clip (static values based on the card files)
 	face.SetClipX((rank - 1) * 73);
 	face.SetClipY((suit - 1) * 98);
+	face.SetClipW(73);
+	face.SetClipH(98);
 	face.SetClipW(73);
 	face.SetClipH(98);
 
@@ -122,6 +124,14 @@ Sint16 Card::GetX() {
 
 Sint16 Card::GetY() {
 	return y;
+}
+
+Sint16 Card::GetWidth() {
+	return face.GetClipW();
+}
+
+Sint16 Card::GetHeight() {
+	return face.GetClipH();
 }
 
 void Card::DrawTo(SDL_Surface* const dest) {

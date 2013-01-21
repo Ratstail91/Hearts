@@ -38,7 +38,7 @@ void PlayerAI::SelectSwapCards(int dirX, int dirY) {
 		int card = -1;
 
 		for (int i = Hand()->Size() - 1; i >= 0; i--) {
-			if (Hand()->Read(i)->Rank() > Hand()->Read(card)->Rank() && !CheckSwapCards(i) ) {
+			if (Hand()->Read(i)->GetRank() > Hand()->Read(card)->GetRank() && !CheckSwapCards(i) ) {
 				card = i;
 			}
 		}
@@ -75,7 +75,7 @@ Card* PlayerAI::PassPlayFirstTrick(int leadingSuit) {
 
 	//follow suit
 	for(int i = 0; i < Hand()->Size()-1; i++)
-		if (Hand()->Read(i)->Suit() == leadingSuit)
+		if (Hand()->Read(i)->GetSuit() == leadingSuit)
 			return Hand()->Pass(i);
 
 	/* bug: it's possible that if every penalty card is initially dealt the the AI, it'll break
@@ -88,7 +88,7 @@ Card* PlayerAI::PassPlayFirstTrick(int leadingSuit) {
 
 	for (int i = Hand()->Size() -1; i >= 0; i--) {//backwards, to choose the highest rank
 		c = Hand()->Read(i);
-		if (c->Suit() != Card::HEARTS && !ISCARD(c,QUEEN,SPADES) ) {
+		if (c->GetSuit() != Card::HEARTS && !ISCARD(c,QUEEN,SPADES) ) {
 			c = Hand()->Pass(i);
 			break;
 		}
@@ -109,7 +109,7 @@ Card* PlayerAI::PassPlayFollowSuit(int leadingSuit, bool heartsBroken) {
 		}
 		else {
 			for (int i = 0; i < Hand()->Size() -1; i++) {
-				if (Hand()->Read(i)->Suit() != Card::HEARTS) {
+				if (Hand()->Read(i)->GetSuit() != Card::HEARTS) {
 					c = Hand()->Pass(i);
 					break;
 				}
@@ -122,7 +122,7 @@ Card* PlayerAI::PassPlayFollowSuit(int leadingSuit, bool heartsBroken) {
 
 	//play the lowest card of the suit
 	for (int i = 0; i < Hand()->Size()-1; i++)
-		if (Hand()->Read(i)->Suit() == leadingSuit)
+		if (Hand()->Read(i)->GetSuit() == leadingSuit)
 			return Hand()->Pass(i);
 
 	return NULL;
@@ -135,7 +135,7 @@ Card* PlayerAI::PassPlayBreakSuit(bool& heartsBroken) {
 			return Hand()->Pass(i);
 
 	//if I have a heart
-	if (Hand()->Read( Hand()->Size()-1 )->Suit() == Card::HEARTS) {
+	if (Hand()->Read( Hand()->Size()-1 )->GetSuit() == Card::HEARTS) {
 		heartsBroken = true;
 		return Hand()->Pass( Hand()->Size()-1 );
 	}

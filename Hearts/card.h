@@ -1,6 +1,6 @@
 /* File Name: card.h
  * Author: Kayne Ruse
- * Date (dd/mm/yyyy): 21/01/2013
+ * Date (dd/mm/yyyy): 22/01/2013
  * Copyright: (c) Kayne Ruse 2011, 2012, 2013
  *
  * This software is provided 'as-is', without any express or implied
@@ -32,7 +32,7 @@
 
 #include "image.h"
 
-#define ISCARD(CARD,RANK,SUIT) (CARD->Suit() == Card::SUIT && CARD->Rank() == Card::RANK)
+#define ISCARD(CARD,RANK,SUIT) (CARD->GetSuit() == Card::SUIT && CARD->GetRank() == Card::RANK)
 
 class Card {
 public:
@@ -58,6 +58,9 @@ public:
 	Sint16 SetY(Sint16);
 	Sint16 GetX();
 	Sint16 GetY();
+
+	Sint16 GetWidth();
+	Sint16 GetHeight();
 
 	void DrawTo(SDL_Surface* const);
 

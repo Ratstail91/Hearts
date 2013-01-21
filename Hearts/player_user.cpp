@@ -99,16 +99,16 @@ Card* PlayerUser::PassPlayFirstTrick(int card, int leadingSuit) {
 	}
 
 	//follow suit
-	if (Hand()->Read(card)->Suit() == leadingSuit) //if I've selected the correct suit
+	if (Hand()->Read(card)->GetSuit() == leadingSuit) //if I've selected the correct suit
 		return Hand()->Pass(card);
 
 	//if I haven't selected the correct suit
 	for (int i = 0; i < Hand()->Size() -1; i++)
-		if (Hand()->Read(i)->Suit() == leadingSuit) //The correct suit is in my hand
+		if (Hand()->Read(i)->GetSuit() == leadingSuit) //The correct suit is in my hand
 			return NULL;
 
 	//can't follow suit, no penalty cards
-	if (Hand()->Read(card)->Suit() != Card::HEARTS && !ISCARD(Hand()->Read(card),QUEEN,SPADES))
+	if (Hand()->Read(card)->GetSuit() != Card::HEARTS && !ISCARD(Hand()->Read(card),QUEEN,SPADES))
 		return Hand()->Pass(card);
 
 	return NULL;
@@ -121,7 +121,7 @@ Card* PlayerUser::PassPlayFollowSuit(int card, int leadingSuit, bool heartsBroke
 		if (heartsBroken)
 			return Hand()->Pass(card);
 		else {
-			if (Hand()->Read(card)->Suit() != Card::HEARTS)
+			if (Hand()->Read(card)->GetSuit() != Card::HEARTS)
 				return Hand()->Pass(card);
 			else
 				return NULL;
@@ -129,7 +129,7 @@ Card* PlayerUser::PassPlayFollowSuit(int card, int leadingSuit, bool heartsBroke
 	}
 
 	//if the player is following suit
-	if (Hand()->Read(card)->Suit() == leadingSuit)
+	if (Hand()->Read(card)->GetSuit() == leadingSuit)
 		return Hand()->Pass(card);
 
 	//when the card does not follow suit
@@ -139,10 +139,10 @@ Card* PlayerUser::PassPlayFollowSuit(int card, int leadingSuit, bool heartsBroke
 Card* PlayerUser::PassPlayBreakSuit(int card, int leadingSuit, bool& heartsBroken) {
 	//if the player CAN still follow suit
 	for (int i = 0; i < Hand()->Size() -1; i++)
-		if (Hand()->Read(i)->Suit() == leadingSuit)
+		if (Hand()->Read(i)->GetSuit() == leadingSuit)
 			return NULL;
 
-	if (Hand()->Read(card)->Suit() == Card::HEARTS)
+	if (Hand()->Read(card)->GetSuit() == Card::HEARTS)
 		heartsBroken = true;
 	return Hand()->Pass(card);
 }

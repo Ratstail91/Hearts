@@ -23,4 +23,3 @@
 
 ~~~~~
 
-*	~~Move the random setup~~ Add random seed to the scene

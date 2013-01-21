@@ -104,7 +104,7 @@ void Player::ShiftCard(int index, int dirX, int dirY) {
 
 void Player::SetFaces(int face) {
 	for (CardList::iterator it = hand.Head(); it != NULL; it = it->GetNext())
-		it->SetFace(face);
+		it->SetFaceState(face);
 }
 
 void Player::SetPositions(int _posX, int _posY, int _dirX, int _dirY) {
@@ -131,7 +131,7 @@ void Player::SetTrickPositions() {
 	tricks.Sort();
 
 	for (int i = 0; i < tricks.Size(); i++) {
-		if (tricks.Read(i)->Suit() != Card::HEARTS && !ISCARD(tricks.Read(i),QUEEN,SPADES))
+		if (tricks.Read(i)->GetSuit() != Card::HEARTS && !ISCARD(tricks.Read(i),QUEEN,SPADES))
 			continue;
 
 		tricks.Read(i)->SetPos(x,y);
@@ -141,7 +141,7 @@ void Player::SetTrickPositions() {
 }
 
 void Player::DrawHand(SDL_Surface* dest) {
-	Hand()->DrawAll(dest);
+	Hand()->DrawTo(dest);
 }
 
 void Player::DrawTricks(SDL_Surface* dest) {
@@ -149,9 +149,9 @@ void Player::DrawTricks(SDL_Surface* dest) {
 	tricks.Sort();
 
 	for (int i = 0; i < tricks.Size(); i++) {
-		if (tricks.Read(i)->Suit() != Card::HEARTS && !ISCARD(tricks.Read(i),QUEEN,SPADES))
+		if (tricks.Read(i)->GetSuit() != Card::HEARTS && !ISCARD(tricks.Read(i),QUEEN,SPADES))
 			continue;
-		tricks.Read(i)->Draw(dest);
+		tricks.Read(i)->DrawTo(dest);
 	}
 }
 

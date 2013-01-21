@@ -26,6 +26,7 @@
  *     Designed for Project Hearts, 4th try.
 */
 #include <iostream>
+#include <time.h>
 #include "hearts_engine.h"
 using namespace std;
 
@@ -36,7 +37,8 @@ using namespace std;
 //-------------------------
 
 HeartsEngine::HeartsEngine() {
-	mImage.Add("heart","rsc\\heart.bmp",32,32,64,64);
+	heartSprite.LoadSurface("rsc\\heart.bmp");
+	heartSprite.SetClipW(64);
 
 	mAudio.Init(0,MIX_DEFAULT_FREQUENCY,MIX_DEFAULT_FORMAT,1,1024);
 	mAudio.Add("knock","rsc\\knock.wav");
@@ -60,6 +62,10 @@ HeartsEngine::HeartsEngine() {
 	player[1]->SetPositions(0,						ScreenHeight()/2 - 169,		0,20);
 	player[2]->SetPositions(ScreenWidth()/2-156,	0,							20,0);
 	player[3]->SetPositions(ScreenWidth()-73,		ScreenHeight()/2 - 169,		0,20);
+
+	//randomization
+	srand(time(NULL));
+	rand(); rand(); rand();
 }
 
 HeartsEngine::~HeartsEngine() {
@@ -67,6 +73,8 @@ HeartsEngine::~HeartsEngine() {
 
 	for (int i = 0; i < 4; i++)
 		delete player[i];
+
+	heartSprite.UnloadSurface();
 }
 
 //-------------------------
@@ -97,7 +105,7 @@ void HeartsEngine::Process() {
 
 void HeartsEngine::Draw() {
 	SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,128,0));
-	mImage.DrawAll(screen);
+	heartSprite.DrawTo(screen, 32, 32);
 
 	switch(gamePhase) {
 		case SETUP:
@@ -140,7 +148,7 @@ void HeartsEngine::SetupPhase() {
 	firstPlayer = -1;
 	trickCount = 0;
 	heartsBroken = false;
-	mImage["heart"]->SetClipX(0);
+	heartSprite.SetClipX(0);
 
 	if (rotation == NONE) {
 		CalcFirst();
@@ -271,7 +279,7 @@ void HeartsEngine::PlayBeforePhase() {
 				cerr << "Player index: " << i << endl;
 			}
 			if (heartSound != heartsBroken) {
-				mImage["heart"]->SetClipX(64);
+				heartSprite.SetClipX(64);
 				mAudio.Play("glass");
 			}
 		}
@@ -288,7 +296,7 @@ void HeartsEngine::PlayPlayerPhase() {
 			playPhase = AFTER;
 		}
 		if (heartSound != heartsBroken) {
-			mImage["heart"]->SetClipX(64);
+			heartSprite.SetClipX(64);
 			mAudio.Play("glass");
 		}
 	}
@@ -309,7 +317,7 @@ void HeartsEngine::PlayAfterPhase() {
 			cerr << "Player index: " << i << endl;
 		}
 		if (heartSound != heartsBroken) {
-			mImage["heart"]->SetClipX(64);
+			heartSprite.SetClipX(64);
 			mAudio.Play("glass");
 		}
 	}
@@ -372,7 +380,7 @@ void HeartsEngine::CalcScores() {
 			if (card == NULL)
 				break;
 
-			if (card->Suit() ==  Card::HEARTS)
+			if (card->GetSuit() ==  Card::HEARTS)
 				tally++;
 
 			if (ISCARD(card,QUEEN,SPADES))
