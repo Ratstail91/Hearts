@@ -1,0 +1,3 @@
+[submodule "Hearts/Codebase"]
+	path = Hearts/Codebase
+	url = https://github.com/Ratstail91/Codebase.git

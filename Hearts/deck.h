@@ -30,7 +30,7 @@
 
 #include "SDL.h"
 
-#include "image.h"
+#include "Codebase/image.h"
 
 #include "card_list.h"
 

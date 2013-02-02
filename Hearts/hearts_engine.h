@@ -28,7 +28,7 @@
 #ifndef KR_HEARTSENGINE_H_
 #define KR_HEARTSENGINE_H_
 #include "base_engine.h"
-#include "image.h"
+#include "Codebase/image.h"
 #include "audio_manager.h"
 #include "deck.h"
 #include "player_ai.h"

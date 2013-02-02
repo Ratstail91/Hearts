@@ -30,7 +30,7 @@
 
 #include "SDL.h"
 
-#include "image.h"
+#include "Codebase/image.h"
 
 #define ISCARD(CARD,RANK,SUIT) (CARD->GetSuit() == Card::SUIT && CARD->GetRank() == Card::RANK)
 
