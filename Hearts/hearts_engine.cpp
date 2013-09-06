@@ -27,10 +27,17 @@
 */
 #include <iostream>
 #include <time.h>
+#include <sstream>
 #include "hearts_engine.h"
 using namespace std;
 
 #define CASE break; case
+
+string itos(int i) {
+	ostringstream ostr;
+	ostr << i;
+	return ostr.str();
+}
 
 //-------------------------
 //Public access members
@@ -46,8 +53,8 @@ HeartsEngine::HeartsEngine() {
 	button.LoadFontSurface("rsc\\pk_white_8.bmp");
 	font.LoadSurface("rsc\\pk_white_8.bmp");
 
-//	button.SetX();
-//	button.SetY();
+	button.SetX(300);
+	button.SetY(300);
 
 	player[0] = new PlayerUser();
 	player[1] = new PlayerAI();
@@ -84,8 +91,14 @@ HeartsEngine::~HeartsEngine() {
 //Engine members
 //-------------------------
 
-void HeartsEngine::MouseButtonDown(SDL_MouseButtonEvent& button) {
-	BaseEngine::MouseButtonDown(button);
+void HeartsEngine::MouseMotion(SDL_MouseMotionEvent& motion) {
+	BaseEngine::MouseMotion(motion);
+	button.MouseMotion(motion);
+}
+
+void HeartsEngine::MouseButtonDown(SDL_MouseButtonEvent& butt) {
+	BaseEngine::MouseButtonDown(butt);
+	button.MouseButtonDown(butt);
 
 	switch(gamePhase) {
 		CASE SWAP:
@@ -94,6 +107,11 @@ void HeartsEngine::MouseButtonDown(SDL_MouseButtonEvent& button) {
 			if (playPhase == PLAYER)
 				PlayPlayerPhase();
 	}
+}
+
+void HeartsEngine::MouseButtonUp(SDL_MouseButtonEvent& butt) {
+	BaseEngine::MouseButtonUp(butt);
+	button.MouseButtonUp(butt);
 }
 
 void HeartsEngine::Process() {
@@ -113,16 +131,52 @@ void HeartsEngine::Draw() {
 	switch(gamePhase) {
 		case SETUP:
 		case SWAP:
+			if (player[0]->CheckSwapCards()) {
+				switch(rotation) {
+					case Rotation::LEFT:
+						button.SetText("Pass Left");
+					break;
+					case Rotation::RIGHT:
+						button.SetText("Pass Right");
+					break;
+					case Rotation::ACROSS:
+						button.SetText("Pass Across");
+					break;
+				}
+				button.DrawTo(screen);
+			}
 		case TRICK:
 			for (int i = 0; i < 4; i++)
 				player[i]->DrawHand(screen);
 
 			table.Draw(screen,firstPlayer);
-			break;
+		break;
 		case SCORE:
 			for (int i = 0; i < 4; i++)
 				player[i]->DrawTricks(screen);
-			break;
+			button.SetText("Continue");
+			button.DrawTo(screen);
+
+			//I know this sucks
+			for (int i = 0; i < 4; i++) {
+				if (winner == i) {
+					font.DrawStringTo(
+						string() + "Player " + itos(i+1) + ": " + itos(player[i]->Score()) + " - " + itos(player[i]->Wins()) + " wins  <-- Winner!!",
+						screen,
+						300,
+						200 + font.GetCharH() * i
+					);
+				}
+				else {
+					font.DrawStringTo(
+						string() + "Player " + itos(i+1) + ": " + itos(player[i]->Score()) + " - " + itos(player[i]->Wins()) + " wins",
+						screen,
+						300,
+						200 + font.GetCharH() * i
+					);
+				}
+			}
+		break;
 	}
 }
 
@@ -166,7 +220,7 @@ void HeartsEngine::SetupPhase() {
 }
 
 void HeartsEngine::SwapPhase() {
-	if (!keyboard[SDLK_F1])
+	if (button.GetState() != Button::State::PRESSED)
 		return;
 
 	if (!player[0]->CheckSwapCards())
@@ -210,47 +264,41 @@ void HeartsEngine::TrickPhase() {
 		ResetPositions();
 		CalcScores();
 		gamePhase = SCORE;
-
-		for (int i = 0; i < 4; i++) {
-			cout << "Player " << i << ": " << player[i]->Score() << endl;//tmp...
-		}
-		cout << endl;
 	}
 }
 
 void HeartsEngine::ScorePhase() {
 	//end of game; temporary functionality...
-	if (player[0]->Score() >=  100 ||
+	if ((player[0]->Score() >=  100 ||
 		player[1]->Score() >=  100 ||
 		player[2]->Score() >=  100 ||
-		player[3]->Score() >=  100)
+		player[3]->Score() >=  100) && winner == -1)
 	{
-		cout << "GAME OVER" << endl;
-		int winner = 0;
+		winner = 0;
 
+		//find the winner
 		for (int i = 0; i < 4; i++) {
 			if (player[i]->Score() < player[winner]->Score()) {
 				winner = i;
 			}
 		}
-		cout << "Winner is: " << winner << endl;
-		cout << endl;
 
+		//award the winner
 		player[winner]->Wins(1);
-		for (int i = 0; i < 4; i++)
-			cout << "Player " << i << " wins: " << player[i]->Wins() << endl;
-
-		cout << endl;
-
-		//reset all values
-		for (int i = 0; i < 4; i++)
-			player[i]->Score( -player[i]->Score() );
-		rotation = NONE;
 	}
 
-	//10 second delay
-	if (SDL_GetTicks() - timeTick > 10000 || keyboard[SDLK_F1])//button...
+	//wait for input
+	if (button.GetState() == Button::State::PRESSED) {
 		gamePhase = CLEANUP;
+
+		//reset the game
+		if (winner != -1) {
+			winner = -1;
+			for (int i = 0; i < 4; i++)
+				player[i]->Score( -player[i]->Score() );
+			rotation = NONE;
+		}
+	}
 }
 
 void HeartsEngine::CleanupPhase() {

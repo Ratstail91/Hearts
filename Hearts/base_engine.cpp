@@ -186,7 +186,7 @@ void BaseEngine::RedrawScreen() {
 }
 
 void BaseEngine::AdditionalInit() {
-	SDL_WM_SetCaption("KAGE: Kayne's All-purpose Game Engine, By Kayne Ruse",NULL);
+	SDL_WM_SetCaption("Hearts",NULL);
 }
 
 int BaseEngine::TranslateMods(SDL_keysym ks) {

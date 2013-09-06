@@ -45,7 +45,9 @@ public:
 	~HeartsEngine();
 private:
 	/* Engine members */
+	void MouseMotion		(SDL_MouseMotionEvent& motion);
 	void MouseButtonDown	(SDL_MouseButtonEvent& button);
+	void MouseButtonUp		(SDL_MouseButtonEvent& button);
 	void Process			();
 	void Draw				();
 
@@ -87,6 +89,8 @@ private:
 	int trickCount;
 	bool heartsBroken;
 	int timeTick;
+
+	int winner = -1;
 
 	/* Utility members */
 	void ResetPositions();
