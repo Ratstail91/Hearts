@@ -28,11 +28,9 @@
 #ifndef KR_DECK_H_
 #define KR_DECK_H_
 
-#include "SDL.h"
-
-#include "image.h"
-
 #include "card_list.h"
+
+#include "image.hpp"
 
 class Deck : public CardList {
 public:

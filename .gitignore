@@ -1,6 +1,6 @@
 #Editor generated files
-#*.sln
-#*.vcproj
+*.sln
+*.vcproj
 *.suo
 *.ncb
 *.user
@@ -8,3 +8,14 @@
 #Directories
 Release/
 Debug/
+Out/
+
+#Project generated files
+*.db
+*.o
+*.a
+*.exe
+
+#Shell files
+*.bat
+*.sh

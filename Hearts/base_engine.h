@@ -29,7 +29,7 @@
 #ifndef KR_KAGE_BASEENGINE_H_
 #define KR_KAGE_BASEENGINE_H_
 
-#include "SDL.h"
+#include "SDL/SDL.h"
 
 namespace KAGE {
 	class BaseEngine {

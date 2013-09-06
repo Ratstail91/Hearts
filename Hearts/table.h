@@ -27,7 +27,7 @@
 */
 #ifndef KR_TABLE_H_
 #define KR_TABLE_H_
-#include "SDL.h"
+
 #include "card_list.h"
 
 class Table {

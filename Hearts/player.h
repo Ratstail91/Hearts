@@ -27,7 +27,7 @@
 */
 #ifndef KR_PLAYER_H_
 #define KR_PLAYER_H_
-#include "SDL.h"
+
 #include "card_list.h"
 
 class Player {

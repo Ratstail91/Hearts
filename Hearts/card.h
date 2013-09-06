@@ -28,9 +28,7 @@
 #ifndef KR_CARD_H_
 #define KR_CARD_H_
 
-#include "SDL.h"
-
-#include "image.h"
+#include "image.hpp"
 
 #define ISCARD(CARD,RANK,SUIT) (CARD->GetSuit() == Card::SUIT && CARD->GetRank() == Card::RANK)
 

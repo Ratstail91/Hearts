@@ -40,10 +40,6 @@ HeartsEngine::HeartsEngine() {
 	heartSprite.LoadSurface("rsc\\heart.bmp");
 	heartSprite.SetClipW(64);
 
-	mAudio.Init(0,MIX_DEFAULT_FREQUENCY,MIX_DEFAULT_FORMAT,1,1024);
-	mAudio.Add("knock","rsc\\knock.wav");
-	mAudio.Add("glass","rsc\\glass_break.wav");
-
 	deck.Init("rsc\\cards.bmp","rsc\\back.bmp");
 
 	player[0] = new PlayerUser();
@@ -74,7 +70,7 @@ HeartsEngine::~HeartsEngine() {
 	for (int i = 0; i < 4; i++)
 		delete player[i];
 
-	heartSprite.UnloadSurface();
+	heartSprite.FreeSurface();
 }
 
 //-------------------------
@@ -267,7 +263,6 @@ void HeartsEngine::CleanupPhase() {
 
 void HeartsEngine::PlayBeforePhase() {
 	if (firstPlayer != 0) {
-		mAudio.Play("knock");
 		for (int i = firstPlayer; i < 4; i++) {
 			bool heartSound = heartsBroken;
 			Card* c = ((PlayerAI*)(player[i]))->PassPlayCard(table.GetLeadingSuit(firstPlayer),trickCount,heartsBroken);
@@ -280,7 +275,6 @@ void HeartsEngine::PlayBeforePhase() {
 			}
 			if (heartSound != heartsBroken) {
 				heartSprite.SetClipX(64);
-				mAudio.Play("glass");
 			}
 		}
 	}
@@ -297,13 +291,11 @@ void HeartsEngine::PlayPlayerPhase() {
 		}
 		if (heartSound != heartsBroken) {
 			heartSprite.SetClipX(64);
-			mAudio.Play("glass");
 		}
 	}
 }
 
 void HeartsEngine::PlayAfterPhase() {
-	mAudio.Play("knock");
 	int max = (firstPlayer == 0)? 4:firstPlayer;
 
 	for (int i = 1; i < max; i++) {
@@ -318,7 +310,6 @@ void HeartsEngine::PlayAfterPhase() {
 		}
 		if (heartSound != heartsBroken) {
 			heartSprite.SetClipX(64);
-			mAudio.Play("glass");
 		}
 	}
 
