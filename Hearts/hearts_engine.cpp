@@ -42,6 +42,13 @@ HeartsEngine::HeartsEngine() {
 
 	deck.Init("rsc\\cards.bmp","rsc\\back.bmp");
 
+	button.LoadSurface("rsc\\button.bmp");
+	button.LoadFontSurface("rsc\\pk_white_8.bmp");
+	font.LoadSurface("rsc\\pk_white_8.bmp");
+
+//	button.SetX();
+//	button.SetY();
+
 	player[0] = new PlayerUser();
 	player[1] = new PlayerAI();
 	player[2] = new PlayerAI();

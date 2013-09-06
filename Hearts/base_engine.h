@@ -103,16 +103,4 @@ namespace KAGE {
 	};
 }
 
-#ifndef START
-/* Creates SDL_main(). Place this after the derived engine's
- * declaration, and pass it the name of the derived engine.
-*/
-#define START(ENGINE)			\
-int SDL_main(int,char**) {		\
-	ENGINE app;					\
-	app.Start(true);			\
-	return 0;					\
-}
-#endif
-
 #endif

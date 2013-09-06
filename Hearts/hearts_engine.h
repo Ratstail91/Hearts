@@ -27,12 +27,16 @@
 */
 #ifndef KR_HEARTSENGINE_H_
 #define KR_HEARTSENGINE_H_
+
 #include "base_engine.h"
+
 #include "image.hpp"
 #include "deck.h"
 #include "player_ai.h"
 #include "player_user.h"
 #include "table.h"
+#include "button.hpp"
+#include "raster_font.hpp"
 
 class HeartsEngine : public KAGE::BaseEngine {
 public:
@@ -72,6 +76,9 @@ private:
 	}rotation;
 
 	/* Game members */
+	Button button;
+	RasterFont font;
+
 	Deck deck;
 	Player *player[4];
 	Table table;
@@ -87,7 +94,5 @@ private:
 	void CalcFirst();
 	void CalcScores();
 };
-
-START(HeartsEngine)
 
 #endif
