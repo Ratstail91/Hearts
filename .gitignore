@@ -7,8 +7,11 @@
 
 #Directories
 Release/
+release/
 Debug/
+debug/
 Out/
+out/
 
 #Project generated files
 *.db

@@ -44,14 +44,14 @@ string itos(int i) {
 //-------------------------
 
 HeartsEngine::HeartsEngine() {
-	heartSprite.LoadSurface("rsc\\heart.bmp");
+	heartSprite.LoadSurface("rsc/heart.bmp");
 	heartSprite.SetClipW(64);
 
-	deck.Init("rsc\\cards.bmp","rsc\\back.bmp");
+	deck.Init("rsc/cards.bmp","rsc/back.bmp");
 
-	button.LoadSurface("rsc\\button.bmp");
-	button.LoadFontSurface("rsc\\pk_white_8.bmp");
-	font.LoadSurface("rsc\\pk_white_8.bmp");
+	button.LoadSurface("rsc/button.bmp");
+	button.LoadFontSurface("rsc/pk_white_8.bmp");
+	font.LoadSurface("rsc/pk_white_8.bmp");
 
 	button.SetX(300);
 	button.SetY(300);

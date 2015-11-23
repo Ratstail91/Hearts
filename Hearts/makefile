@@ -1,7 +1,15 @@
-#config
-LIB+=-lmingw32 -lSDLmain -lSDL
-CXXFLAGS+=-std=c++11 -DDEBUG
-CFLAGS+=-DDEBUG
+#libraries
+ifeq ($(OS),Windows_NT)
+	LIBS+=-lmingw32
+endif
+LIBS+=-lSDLmain -lSDL
+
+#flags
+CXXFLAGS+=-std=c++11 $(addprefix -I,$(INCLUDES))
+ifeq ($(shell uname), Linux)
+	#read data about the current install
+	CXXFLAGS+=$(shell sdl-config --cflags --static-libs)
+endif
 
 #source
 CXXSRC=$(wildcard *.cpp)
@@ -18,7 +26,7 @@ OUT=$(addprefix $(OUTDIR)/,Hearts)
 
 #targets
 all: $(OBJ) $(OUT)
-	$(CXX) $(CXXFLAGS) -o $(OUT) $(OBJ) $(LIB)
+	$(CXX) $(CXXFLAGS) -o $(OUT) $(OBJ) $(LIBS)
 
 $(OBJ): | $(OBJDIR)
 
@@ -33,10 +41,13 @@ $(OUTDIR):
 $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-$(OBJDIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
-
 clean:
+ifeq ($(OS),Windows_NT)
 	$(RM) *.o *.a *.exe
+else ifeq ($(shell uname), Linux)
+	find . -type f -name '*.o' -exec rm -f -r -v {} \;
+	find . -type f -name '*.a' -exec rm -f -r -v {} \;
+	rm -f -v $(OUT)
+endif
 
 rebuild: clean all
