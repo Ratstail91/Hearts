@@ -30,4 +30,4 @@ Permission is granted to anyone to use this software for any purpose, including 
 ## Contact information
 
 krgamestudios@gmail.com  
-Current Build: https://www.dropbox.com/s/gqo2qqj6v1pejyq/Hearts%20by%20Kayne%20Ruse.rar?dl=1  
+1.0 Build: https://www.dropbox.com/s/gqo2qqj6v1pejyq/Hearts%20by%20Kayne%20Ruse.rar?dl=1  
