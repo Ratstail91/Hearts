@@ -29,7 +29,5 @@ Permission is granted to anyone to use this software for any purpose, including 
 
 ## Contact information
 
-ratstail91@yahoo.com.au  
-http://kr-studios.tumblr.com/  
-http://www.facebook.com/krgamestudios  
-Oldest known version: https://dl.dropbox.com/u/46669050/Hearts%20by%20Kayne%20Ruse.rar  
+krgamestudios@gmail.com  
+Current Build: https://www.dropbox.com/s/2odwzyqzgutbj0q/Hearts%20by%20Kayne%20Ruse.rar?dl=1  
